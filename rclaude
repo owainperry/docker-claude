@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Resolve the argument: default to current dir, support "." or any relative path
+HOST_DIR="$(cd "${1:-.}" && pwd)"
+
+# Translate host path to container path
+CONTAINER_DIR="${HOST_DIR/$HOME\/git//home/user/git}"
+
+# Bail if the path couldn't be translated (i.e. it's outside the mounted volume)
+if [[ "$CONTAINER_DIR" == "$HOST_DIR" ]]; then
+  echo "Error: '$HOST_DIR' is not under $HOME/git — not mounted in the container."
+  exit 1
+fi
+
+#podman machine start 2>/dev/null
+docker run --rm -it \
+  -v $HOME/claude:/claude \
+  -v $HOME/git:/home/user/git \
+  --workdir "$CONTAINER_DIR" \
+  --user 1000:1000 \
+  operry/claude:1
