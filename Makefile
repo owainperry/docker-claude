@@ -1,7 +1,7 @@
-IMAGE  := operry/claude
+IMAGE  := operry/codex
 TAG    := $(or $(GITHUB_RUN_NUMBER),local)
 GIT_DIR := /Users/operry/git
-CLAUDE_DIR := /Users/operry/claude
+CLAUDE_DIR := /Users/operry/codex
 
 .PHONY: build run clean
 
@@ -11,7 +11,7 @@ build:
 run:
 	docker machine start 2>/dev/null; \
 	docker container run --rm -it \
-		-v $(CLAUDE_DIR):/claude \
+		-v $(CLAUDE_DIR):/codex \
 		-v $(GIT_DIR):/home/user/git \
 		--workdir /home/user \
 		--user 1000:1000 \

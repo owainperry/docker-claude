@@ -13,9 +13,11 @@ if [[ "$CONTAINER_DIR" == "$HOST_DIR" ]]; then
 fi
 
 #podman machine start 2>/dev/null
+colima start 2>/dev/null
 docker run --rm -it \
   -v $HOME/claude:/claude \
+  -v $HOME/codex:/codex \
   -v $HOME/git:/home/user/git \
   --workdir "$CONTAINER_DIR" \
   --user 1000:1000 \
-  operry/claude:latest
+  operry/codex:latest
