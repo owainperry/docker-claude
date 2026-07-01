@@ -20,7 +20,7 @@ RUN curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/ma
 COPY entrypoint.sh /
 COPY .bashrc /home/user/.bashrc
 COPY .bashrc /root/.bashrc
-ENTRYPOINT /entrypoint.sh 
+ENTRYPOINT ["/entrypoint.sh"]
 
 
 
