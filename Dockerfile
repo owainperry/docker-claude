@@ -7,7 +7,8 @@ RUN dnf install -y git bash vim python3 wget jq yq curl python3-pip poppler-util
     rm -rf /usr/local/go && tar -C /usr/local -xzf go1.26.2.linux-${TARGETARCH}.tar.gz && \
     rm go1.26.2.linux-${TARGETARCH}.tar.gz
 USER user 
-RUN curl -fsSL https://claude.ai/install.sh | bash
+RUN curl -fsSL https://claude.ai/install.sh | bash 
+RUN curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash
 COPY entrypoint.sh /
 COPY .bashrc /home/user/.bashrc
 COPY .bashrc /root/.bashrc

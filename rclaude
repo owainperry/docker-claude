@@ -16,8 +16,7 @@ fi
 colima start 2>/dev/null
 docker run --rm -it \
   -v $HOME/.claude:/claude \
-  -v $HOME/codex:/codex \
   -v $HOME/git:/home/user/git \
   --workdir "$CONTAINER_DIR" \
   --user 1000:1000 \
-  operry/claude:9
+  operry/claude:11
