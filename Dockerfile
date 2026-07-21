@@ -16,7 +16,7 @@ RUN dnf install -y git bash vim python3 wget jq yq curl python3-pip poppler-util
     ./dotnet-install.sh --runtime dotnet --channel 8.0 --quality preview --install-dir /usr/local/dotnet && \
     rm -f  ./dotnet-install.sh 
 USER 1000:1000
-ENV PATH="${PATH}:/usr/local/go/bin:/home/user/go/bin:/usr/local/dotnet"
+ENV PATH="${PATH}:/usr/local/go/bin:/home/user/go/bin:/usr/local/dotnet:/home/user/.local/bin/"
 ENV GOPATH="/home/user/go"
 WORKDIR /tmp
 RUN curl -fsSL https://claude.ai/install.sh | bash && \
