@@ -13,7 +13,7 @@ RUN dnf install -y git bash vim python3 wget jq yq curl python3-pip poppler-util
     curl -L https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh && \
     chmod +x ./dotnet-install.sh && \
     mkdir /usr/local/dotnet && \
-    ./dotnet-install.sh --runtime dotnet --channel 8.0 --quality preview --install-dir /usr/local/dotnet && \
+    ./dotnet-install.sh  --channel 8.0 --install-dir /usr/local/dotnet && \
     rm -f  ./dotnet-install.sh 
 USER 1000:1000
 ENV PATH="${PATH}:/usr/local/go/bin:/home/user/go/bin:/usr/local/dotnet:/home/user/.local/bin/"

@@ -19,4 +19,4 @@ docker run --rm -it \
   -v $HOME/git:/home/user/git \
   -v claude-config:/claude-config \
   --workdir "$CONTAINER_DIR" \
-  operry/claude:18
+  operry/claude:20
