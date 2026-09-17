@@ -1,12 +1,16 @@
 FROM fedora:45
-ARG TARGETARCH=amd64
+# Injected by BuildKit with the TARGET platform's arch. Must be declared with
+# no default value - a default shadows BuildKit's value, which silently put an
+# amd64 Go toolchain in the arm64 image (random SIGSEGVs under emulation).
+ARG TARGETARCH
 ENV CLAUDE_CONFIG_DIR=/claude-config
 RUN dnf -y update && yum clean all
 RUN dnf install -y git bash vim python3 wget jq yq curl python3-pip poppler-utils pandoc opentofu make librsvg2-tools inkscape ImageMagick python3-cairosvg && \
     adduser user && \
+    : "${TARGETARCH:?must be set - build with BuildKit/buildx}" && \
     wget https://go.dev/dl/go1.26.2.linux-${TARGETARCH}.tar.gz && \
     rm -rf /usr/local/go && tar -C /usr/local -xzf go1.26.2.linux-${TARGETARCH}.tar.gz && \
-    rm go1.26.2.linux-${TARGETARCH}.tar.gz && \ 
+    rm go1.26.2.linux-${TARGETARCH}.tar.gz && \
     mkdir -p /claude-config && \
     touch /claude-config/.keep && \
     chown -R 1000:1000 /claude-config && \
@@ -14,14 +18,14 @@ RUN dnf install -y git bash vim python3 wget jq yq curl python3-pip poppler-util
     chmod +x ./dotnet-install.sh && \
     mkdir /usr/local/dotnet && \
     ./dotnet-install.sh  --channel 8.0 --install-dir /usr/local/dotnet && \
-    rm -f  ./dotnet-install.sh 
+    rm -f  ./dotnet-install.sh
 USER 1000:1000
 ENV PATH="${PATH}:/usr/local/go/bin:/home/user/go/bin:/usr/local/dotnet:/home/user/.local/bin/"
 ENV GOPATH="/home/user/go"
 WORKDIR /tmp
 RUN curl -fsSL https://claude.ai/install.sh | bash && \
     curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash && \
-    mkdir -p /home/user/go/bin 
+    mkdir -p /home/user/go/bin
 COPY entrypoint.sh /
 COPY .bashrc /home/user/.bashrc
 COPY .bashrc /root/.bashrc
